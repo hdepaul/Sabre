@@ -4,6 +4,7 @@ import * as playerActions from '../../actions/player-action.js';
 import './players.css';
 import { Table,FormGroup, Form, FormControl, Button } from 'react-bootstrap';
 import {connect} from 'react-redux';
+import { getFilteredPlayers } from '../../selectors/player-selector.js'
 
 class PlayerList extends Component {
     constructor(props, context) {
@@ -59,7 +60,8 @@ class PlayerList extends Component {
                 
                 <FormGroup  controlId="inLineAge" >
                     <FormControl
-                        type="text"
+                        type="number"
+                        step={18.40}
                         placeholder="Age"
                         inputRef={ref => { this.age = ref; }} 
                     />
@@ -87,8 +89,8 @@ class PlayerList extends Component {
                             <tr>
                                 <td>{ e.name }</td> 
                                 <td>{ e.position }</td>
-                                <td>{ e.nationality }</td>
-                                <td>{ e.jerseyNumber }</td>
+                                <td>{ e.team }</td>
+                                <td>{ e.age }</td>
                             </tr> )
                         } 
                     </tbody>
@@ -101,7 +103,7 @@ class PlayerList extends Component {
 
 function mapStateToProps(state) {
     return {
-        players: state.playerReducer.players,
+        players: getFilteredPlayers(state),
         loading: state.playerReducer.loading,
     };
 }
