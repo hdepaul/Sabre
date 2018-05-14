@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Grid, Navbar, Jumbotron, Button } from 'react-bootstrap';
-import PlayerList from './players/list/player-list.js';
+import { Grid, Navbar, Jumbotron } from 'react-bootstrap';
+import ConnectedPlayerList from './players/list/player-list.js';
 
 class App extends Component {
   render() {
@@ -20,7 +19,7 @@ class App extends Component {
         </Navbar>
         <Jumbotron>
           <Grid>
-           <PlayerList/>
+           <ConnectedPlayerList/>
           </Grid>
         </Jumbotron>
       </div>

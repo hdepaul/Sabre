@@ -6,7 +6,7 @@ import { Table,FormGroup, Form, FormControl, Button } from 'react-bootstrap';
 import {connect} from 'react-redux';
 import { getFilteredPlayers } from '../../selectors/player-selector.js'
 
-class PlayerList extends Component {
+export class PlayerList extends Component {
     constructor(props, context) {
         super(props, context);
         this.handleClick = this.handleClick.bind(this);

@@ -12,7 +12,7 @@ export const getFilteredPlayers = createSelector(
         {   
             var filter = {
                 name: playerName,
-                age: age !== '' ? parseInt(age) : '',
+                age: age !== '' ? parseInt(age, 10) : '',
                 position: position     
             }
             return players.map(row => {
