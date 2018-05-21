@@ -1,8 +1,8 @@
 import  * as types from "../constants/action-types";
-import axios from 'axios';
+import getPlayers from "../services/player-service.js"
 
 
-export function beginSearch (){ 
+export function beginSearch(){ 
     return {
           type: types.BEGIN_SEARCH
     }
@@ -14,11 +14,12 @@ export function filterPlayers (search, players){
     }
 };
 
+
 export function fetchPlayers(search) {
 
     return dispatch => {
-        dispatch(beginSearch);
-        axios.get('https://football-players-b31f2.firebaseio.com/players.json?print=pretty')
+        dispatch(beginSearch());
+        return getPlayers()
         .then(function (response) {
             var players = response.data;
             dispatch(filterPlayers(search, players));   

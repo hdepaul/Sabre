@@ -10,37 +10,66 @@ export class PlayerList extends Component {
     constructor(props, context) {
         super(props, context);
         this.handleClick = this.handleClick.bind(this);
+        this.state = {
+            playerName: "",
+            age: "",
+            position: "",
+        }
+
+        this.handlePositionChange = this.handlePositionChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleAgeChange = this.handleAgeChange.bind(this);
+
     }
   
     handleClick() {
         var search = {
-            playerName: this.playerName.value,
-            age: this.age.value,
-            position: this.position.value   
+            playerName: this.state.playerName,
+            age: this.state.age,
+            position: this.state.position   
         }
         this.props.playerActions.fetchPlayers(search);
     }
-            
+   
+    handleAgeChange(e) {
+        this.setState({ age: e.target.value });
+    }
+    
+    handlePositionChange(e) {
+        this.setState({ position: e.target.value  })
+    }
+
+    handleNameChange(e) {
+        var name = (e.target.value.match("[a-zA-Z ]+") || []).pop() || '';
+        this.setState({
+            playerName: name,
+        });
+    }
+    
     render() {
+        const age = this.state.age;
+        const valid = (age === '' || (age >= '18' && age <= '40'));
         const viewableEls = this.props.players;
-        const loading = this.props.loading;
+        const disabled = this.props.loading || !valid;
 
         return (
         <div>
             <div className="Players">Football Player Finder</div>
             <Form inline>
-                <FormGroup  controlId="inLinePlayerName" >
+                <FormGroup  controlId="playerName" >
                     <FormControl
-                        inputRef={ref => { this.playerName = ref; }} 
                         type="text"
                         placeholder="Player Name"
+                        value={this.state.playerName}
+                        onChange={this.handleNameChange}
                         
                     />
+                    <FormControl.Feedback />
                 </FormGroup>{' '}
-                <FormGroup  controlId="inLinePosition" >
+                <FormGroup  controlId="position" >
                     <FormControl componentClass="select"
                         placeholder="select" 
-                        inputRef={ref => { this.position = ref; }} >
+                        onChange={this.handlePositionChange}>
                         <option value="">Positions</option>
                         <option value="Attacking Midfield ">Attacking Midfield</option>
                         <option value="Central Midfield">Central Midfield</option>
@@ -58,19 +87,22 @@ export class PlayerList extends Component {
                 
                 </FormGroup>{' '}
                 
-                <FormGroup  controlId="inLineAge" >
+                <FormGroup  controlId="age">
                     <FormControl
                         type="number"
-                        step={18.40}
                         placeholder="Age"
-                        inputRef={ref => { this.age = ref; }} 
-                    />
+                        onChange={this.handleAgeChange}
+                        value={this.state.age}
+                   />
+                     <FormControl.Feedback />
                 </FormGroup>{' '}
                 <Button
+                    id="searchButton"
+                    name='searchButton'
                     bsStyle="primary"
-                    disabled={loading}
-                    onClick={!loading ? this.handleClick : null}>
-                    {loading ? 'Searching...' : 'Search'}
+                    disabled={disabled}
+                    onClick={!disabled ? this.handleClick : null}>
+                    {this.props.loading ? 'Searching...' : 'Search'}
                 </Button>
 
             </Form>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Grid, Navbar, Jumbotron } from 'react-bootstrap';
-import ConnectedPlayerList from './players/list/player-list.js';
+import ConnectedPlayerList from './components/players/player-list.js';
 
 class App extends Component {
   render() {
